@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sip – Water tracker</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💧</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Sign in -->
+<main id="auth" class="card narrow" hidden>
+  <h1>Sip</h1>
+  <p class="sub">Log every glass. Hit your daily water goal.</p>
+  <form id="auth-form">
+    <label>Email <input id="email" type="email" autocomplete="email" required></label>
+    <label>Password <input id="password" type="password" minlength="6" autocomplete="current-password" required></label>
+    <p id="msg" role="alert"></p>
+    <div class="row">
+      <button type="submit" class="primary" id="signin">Sign in</button>
+      <button type="button" class="ghost" id="signup">Create account</button>
+    </div>
+  </form>
+</main>
+
+<!-- App -->
+<main id="app" hidden>
+  <header>
+    <h1>Sip</h1>
+    <button class="ghost" id="signout">Sign out</button>
+  </header>
+
+  <section class="hero">
+    <svg id="glass" viewBox="0 0 200 300" role="img" aria-label="Glass showing today’s progress">
+      <defs>
+        <clipPath id="clip"><path d="M30 20H170L155 270Q154 285 138 285H62Q46 285 45 270Z"/></clipPath>
+      </defs>
+      <g clip-path="url(#clip)">
+        <rect x="0" y="0" width="200" height="300" fill="#fff" opacity=".55"/>
+        <g id="water" style="transform:translateY(285px)">
+          <path class="wave back" d="M0 10Q25 0 50 10T100 10T150 10T200 10T250 10T300 10T350 10T400 10V300H0Z"/>
+          <path class="wave front" d="M0 10Q25 20 50 10T100 10T150 10T200 10T250 10T300 10T350 10T400 10V300H0Z"/>
+        </g>
+      </g>
+      <path d="M30 20H170L155 270Q154 285 138 285H62Q46 285 45 270Z" fill="none" stroke="#0e2a3b" stroke-width="5" stroke-linejoin="round"/>
+    </svg>
+
+    <div class="readout">
+      <p class="big"><span id="total">0</span><small> / <span id="goal-label">2500</span> ml</small></p>
+      <p id="status" class="sub">Nothing logged yet today.</p>
+
+      <div class="quick" id="quick">
+        <button data-ml="150">150</button>
+        <button data-ml="250">250</button>
+        <button data-ml="330">330</button>
+        <button data-ml="500">500</button>
+      </div>
+      <form id="custom" class="row">
+        <input id="custom-ml" type="number" min="1" max="3000" placeholder="Other amount (ml)" aria-label="Custom amount in ml">
+        <button class="primary" type="submit">Add water</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Today</h2>
+    <ul id="log"></ul>
+    <p id="empty" class="sub">Tap an amount above to log your first drink.</p>
+  </section>
+
+  <section class="card">
+    <h2>Last 7 days</h2>
+    <div id="week" class="week"></div>
+  </section>
+
+  <section class="card">
+    <h2>Daily goal</h2>
+    <form id="goal-form" class="row">
+      <input id="goal" type="number" min="500" max="10000" step="50" aria-label="Daily goal in ml">
+      <button class="primary" type="submit">Save goal</button>
+    </form>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
